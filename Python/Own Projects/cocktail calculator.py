@@ -51,7 +51,7 @@ def search_by_type(stocktype):
         if stocktype[item] == search_specific:
             print(item)
             continue
-        elif stocktype[item] != search_specific and counter >= 0:
+        elif stocktype[item] != search_specific and counter > 0:
             continue
         else:
             print("None found")
