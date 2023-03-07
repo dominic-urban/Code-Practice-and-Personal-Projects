@@ -44,8 +44,31 @@ other_on_hand = {"Choya Umeshu": "Umeshu", "Choya Yuzu": "Yuzu Sake"}
 ##Above gives error: Unsupported operand type for dict and dict
 stock_on_hand = {}
 
-for rum in rums_on_hand:
-    if rums_on_hand 
+def search_by_type(stocktype, search_specific):
+     counter = 0
+     for items in stocktype:
+        if stocktype[items] == search_specific:
+          print(items)
+          continue
+        elif stocktype[items] != search_specific and counter >= 0:
+          continue
+        else:
+          print("None found")
+
+function_selection = input("Please select from the following functions: \n1: Search SOH by Type")
+if function_selection == "1":
+    searcher_selection = input("Select from the following options: \n1: Rums 2: Gins 3: Vodkas \n4: Tequilas 5: Whiskies 6: Liqueurs /n7: Syrups 8: Wines and Vermouths 9: Other")
+    if searcher_selection == "1":
+        stocktype = rums_on_hand
+        search_specific = input("Enter Type eg. \"Dark\"")
+        search_by_type(stocktype, search_specific)
+                # for rums in rums_on_hand:
+                #     if rums_on_hand[rums] == "Dark":
+                #         print(rums)
+else:
+    print("Invalid entry, please enter just the relevant number")
+    
+
 
 
 additional_items = []
