@@ -53,8 +53,9 @@ def search_by_type(stocktype):
             continue
         elif stocktype[item] != search_specific and counter >= 0:
             continue
-        elif stocktype[item] != search_specific and counter == 0:
+        else:
             print("None found")
+            break
     return counter
 
 function_selection = input("Please select from the following functions: \n1: Search SOH by Type \n")
