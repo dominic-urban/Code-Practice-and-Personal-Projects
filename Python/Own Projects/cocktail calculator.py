@@ -45,25 +45,48 @@ other_on_hand = {"Choya Umeshu": "Umeshu", "Choya Yuzu": "Yuzu Sake"}
 stock_on_hand = {}
 
 def search_by_type(stocktype):
-     counter = 0
-     search_specific = input("Enter Type eg. \"Dark\"")
-     for items in stocktype:
-        if stocktype[items] == search_specific:
-          print(items)
-          continue
-        elif stocktype[items] != search_specific and counter >= 0:
-          continue
-        else:
-          print("None found")
+    counter = 0
+    search_specific = input("Enter Type eg. \"Dark\" \n")
+    for item in stocktype:
+        if stocktype[item] == search_specific:
+            print(item)
+            continue
+        elif stocktype[item] != search_specific and counter >= 0:
+            continue
+        elif stocktype[item] != search_specific and counter == 0:
+            print("None found")
+    return counter
 
-function_selection = input("Please select from the following functions: \n1: Search SOH by Type")
+function_selection = input("Please select from the following functions: \n1: Search SOH by Type \n")
 if function_selection == "1":
-    searcher_selection = input("Select from the following options: \n1: Rums 2: Gins 3: Vodkas \n4: Tequilas 5: Whiskies 6: Liqueurs /n7: Syrups 8: Wines and Vermouths 9: Other")
+    searcher_selection = input("Select from the following options: \n1: Rums 2: Gins 3: Vodkas \n4: Tequilas 5: Whiskies 6: Liqueurs \n7: Syrups 8: Wines and Vermouths 9: Other \n")
     if searcher_selection == "1":
         stocktype = rums_on_hand
         search_by_type(stocktype)
     if searcher_selection == "2":
         stocktype = gins_on_hand
+        search_by_type(stocktype)
+    if searcher_selection == "3":
+        stocktype = vodkas_on_hand
+        search_by_type(stocktype)
+    if searcher_selection == "4":
+        stocktype = tequilas_on_hand
+        search_by_type(stocktype)
+    if searcher_selection == "5":
+        stocktype = whiskies_on_hand
+        search_by_type(stocktype)
+    if searcher_selection == "6":
+        stocktype = liqueurs_on_hand
+        search_by_type(stocktype)
+    if searcher_selection == "7":
+        stocktype = syrups_on_hand
+        search_by_type(stocktype)
+    if searcher_selection == "8":
+        stocktype = wine_and_vermouth_on_hand
+        search_by_type(stocktype)
+    if searcher_selection == "9":
+        stocktype = other_on_hand
+        search_by_type(stocktype)        
 else:
     print("Invalid entry, please enter just the relevant number")
     
