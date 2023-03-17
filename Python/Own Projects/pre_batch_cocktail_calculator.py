@@ -9,7 +9,14 @@ glassware = {"Old Fash": 125, "Jug": 2000}
 kentucky_buck = {"Scotch": 45, "Lemon Juice": 22.5, "Bitters": 2, "Strawberry Syrup": 10, "Ginger Beer": 45}
 paloma = {"Tequila": 45, "Ruby Red Grapefruit Juice": 25, "Lime Juice": 10, "Pink Grapefruit Syrup": 15, "Soda Water": 30}
 
-#Ingredient price, mls and price per ml
+#Ingredient and price per ml dictionary
+#This will need to be manually updated each time prebatch is being made (i think)
+#For lemons and limes assumption is made that each lemon will give 45mls juice, and each lime 30mls
+#Below for 2023/18/03 cocktails, always dollars/total mls(or quantity for lemons)/mls
+ingredient_pp_ml = {"Scotch": 0/700, "Lemon Juice": 20.74/16/30, "Bitters": 14/700, "Strawberry Syrup": 17.50/1000, "Ginger Beer": 12.50/3750, "Tequila": 0/700, "Ruby Red Grapefruit Juice": 6.25/1500, "Lime Juice": 5.33/8/30, "Pink Grapefruit Syrup": 17.50/1000, "Soda Water": (4.20/1100)}
+
+print("$" + str((ingredient_pp_ml["Lime Juice"])) + " per ml")
+print(450*ingredient_pp_ml["Ginger Beer"])
 
 ##Function for calculating the total mls of an item
 def mls_calculator(cocktail_dictionary):
@@ -30,7 +37,7 @@ def mls_missing(glassware, cocktail_dictionary):
 def carbonated_mixer_percent(cocktail_dictionary):
   mixer_mls = mls_calculator(cocktail_dictionary)
   mixer_percent = round((list(kentucky_buck.values())[-1]) / mixer_mls * 100, 2)
-  print((list(kentucky_buck.keys())[-1]) + " should be " + str(mixer_percent) + "% of the final cocktail")
+  print("Top with " + str(mixer_percent) + "% " + (list(cocktail_dictionary.keys())[-1]))
 
 ##Calculator for mls of each cocktail ingredient in pre-batch
 #Two versions, one where all ingredients are going into pre-batch, one without last ingredient (eg. carbonated mixer)
@@ -54,8 +61,29 @@ def pre_batch_ingredient_mls(cocktail_dictionary, carbonated_mixer, glassware, q
     del ingredient[-1]
     del mls_of_ingredient[-1]
   carbonated_mixer_percent(cocktail_dictionary)
+  total_cost_per = 0
+  for key in cocktail_dictionary:
+    key = (ingredient_pp_ml[key] * cocktail_dictionary[key])
+    total_cost_per += key
+  print("Cost per cocktail $" + str(total_cost_per))
+  total_cost = total_cost_per * cocktails_per_pre_batch 
+  print("Total cost per batched jug : $" + str(total_cost))    
 
-pre_batch_ingredient_mls(kentucky_buck, carbonated_mixer, glassware["Jug"])
+pre_batch_ingredient_mls(paloma, carbonated_mixer, glassware["Jug"])
+
+##Below seperated function for the prebatch calculator cost calculator, not used because function scope
+# def total_cost_per_cocktail(ingredient_pp_ml, cocktail_dictionary):
+#   total_cost_per = 0
+#   for key in cocktail_dictionary:
+#     key = (ingredient_pp_ml[key] * cocktail_dictionary[key])
+#     print(key)
+#     total_cost_per += key
+#   print("Cost per cocktail $" + str(total_cost_per))
+#   total_cost = total_cost_per * cocktails_per_pre_batch 
+#   print("Total cost per batched jug : $" + str(total_cost))    
+# total_cost_per_cocktail(ingredient_pp_ml, kentucky_buck)
+
+
   
 
 #Print mls totals here - No longer needed, working
