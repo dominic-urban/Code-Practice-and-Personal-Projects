@@ -18,6 +18,14 @@ def mls_calculator(cocktail_dictionary):
     total_mls += cocktail_dictionary[mls]
   return float(total_mls)
 
+##Function for calculating the amount of mls needed to finish the cocktail, just change glassware type within function
+def mls_missing(glassware, cocktail_dictionary):
+  missing_mls = glassware - mls_calculator(cocktail_dictionary)
+  print(str(missing_mls) + "mls required to complete cocktail")
+
+#Test mls_missing function
+#mls_missing(glassware["Old Fash"], kentucky_buck)
+
 #Calculate percent of cocktail which carbonated mixer takes up (to be added after prebatch mix poured)
 def carbonated_mixer_percent(cocktail_dictionary):
   mixer_mls = mls_calculator(cocktail_dictionary)
@@ -29,7 +37,7 @@ def carbonated_mixer_percent(cocktail_dictionary):
 carbonated_mixer = False
 def pre_batch_ingredient_mls(cocktail_dictionary, carbonated_mixer, glassware, quantity=1):
   cocktails_per_pre_batch = glassware*quantity / mls_calculator(cocktail_dictionary)
-  print("Each cocktail will be " + str(mls_calculator(cocktail_dictionary)) + "mls once complete")
+  print("Each cocktail will be " + str(mls_calculator(cocktail_dictionary)) + "mls once complete (not including ice or dilution if relevant)")
   print("Cocktails per " + str(glassware) + "mls: " + str(cocktails_per_pre_batch))
   ingredient = []
   mls_of_ingredient = []
@@ -54,9 +62,4 @@ pre_batch_ingredient_mls(kentucky_buck, carbonated_mixer, glassware["Jug"])
 # print(mls_calculator(kentucky_buck))
 # print(mls_calculator(paloma))
 
-##Working out how much Soda Water to put into Paloma (top with Soda) - Used to finish of paloma list with 30mls Soda Water
-def mls_missing(glassware, cocktail_dictionary):
-  missing_mls = glassware["Old Fash"] - mls_calculator(cocktail_dictionary)
-  print(missing_mls)
 
-print(mls_missing)
