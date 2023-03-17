@@ -40,12 +40,19 @@ def pre_batch_calculator(cocktail_dictionary, carbonated_mixer, glassware, quant
   final_cocktail_dictionary = {}
   ingredient = list(cocktail_dictionary.keys())
   mls_of_ingredient = list(cocktail_dictionary.values())
+  mls_per_ingredients_per_batch = {item: mls for item, mls in zip(ingredient, mls_of_ingredient)} 
   if carbonated_mixer == True: 
     del ingredient[-1]
     del mls_of_ingredient[-1]    
   final_cocktail_dictionary = dict(zip(ingredient, mls_of_ingredient))
   cocktails_per_pre_batch = glassware*quantity / mls_calculator(final_cocktail_dictionary)
   print("Cocktails per " + str(glassware) + "mls: " + str(cocktails_per_pre_batch))
+  mls_per_ingredients_per_batch.update((item, str(round(mls*float(cocktails_per_pre_batch))) + " mls") for item, mls in mls_per_ingredients_per_batch.items())
+  print("Ingredient breakdown:")
+  for item, mls in mls_per_ingredients_per_batch.items():
+    print(" " + item + ": " + str(mls))
+  if carbonated_mixer == True:
+    print("Batch all ingredients except " + list(mls_per_ingredients_per_batch)[-1])  
   print("Each cocktail should use " + str(round(mls_calculator(final_cocktail_dictionary))) + "mls of the pre batch")  
   carbonated_mixer_percent(cocktail_dictionary)
   total_cost_per = 0
@@ -54,11 +61,11 @@ def pre_batch_calculator(cocktail_dictionary, carbonated_mixer, glassware, quant
     total_cost_per += key
   print("Cost per cocktail $" + str(total_cost_per))
   total_cost = total_cost_per * cocktails_per_pre_batch 
-  print("Total cost per batched jug : $" + str(total_cost))    
+  print("Total cost per batched jug : $" + str(total_cost))   
 
 #Final Prints/Program Execution
-print("\nPaloma: \n")
+print('{:s}'.format('\u0332'.join("\nPaloma:")))
 pre_batch_calculator(paloma, carbonated_mixer, glassware["Jug"])
-print("\nKentucky Buck: \n")
+print('{:s}'.format('\u0332'.join("\nKentucky Buck:")))
 pre_batch_calculator(kentucky_buck, carbonated_mixer, glassware["Jug"])
 
