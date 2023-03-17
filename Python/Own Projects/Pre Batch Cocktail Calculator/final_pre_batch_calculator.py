@@ -20,8 +20,6 @@ def mls_calculator(cocktail_dictionary):
   total_mls = 0
   for mls in cocktail_dictionary.keys():
     total_mls += cocktail_dictionary[mls]
-    ## Commented out print - to be used for debugging if totals not adding up right
-    # print(total_mls)
   return float(total_mls)
 
 ##Function for calculating the amount of mls needed to finish the cocktail, just change glassware type within function
@@ -39,8 +37,6 @@ def carbonated_mixer_percent(cocktail_dictionary):
 #Two versions, one where all ingredients are going into pre-batch, one without last ingredient (eg. carbonated mixer)
 carbonated_mixer = True
 def pre_batch_calculator(cocktail_dictionary, carbonated_mixer, glassware, quantity=1):
-  # ingredient = []
-  # mls_of_ingredient = []
   final_cocktail_dictionary = {}
   ingredient = list(cocktail_dictionary.keys())
   mls_of_ingredient = list(cocktail_dictionary.values())
@@ -48,7 +44,6 @@ def pre_batch_calculator(cocktail_dictionary, carbonated_mixer, glassware, quant
     del ingredient[-1]
     del mls_of_ingredient[-1]    
   final_cocktail_dictionary = dict(zip(ingredient, mls_of_ingredient))
-  # print(final_cocktail_dictionary)
   cocktails_per_pre_batch = glassware*quantity / mls_calculator(final_cocktail_dictionary)
   print("Cocktails per " + str(glassware) + "mls: " + str(cocktails_per_pre_batch))
   print("Each cocktail should use " + str(round(mls_calculator(final_cocktail_dictionary))) + "mls of the pre batch")  
@@ -66,5 +61,4 @@ print("\nPaloma: \n")
 pre_batch_calculator(paloma, carbonated_mixer, glassware["Jug"])
 print("\nKentucky Buck: \n")
 pre_batch_calculator(kentucky_buck, carbonated_mixer, glassware["Jug"])
-
 
