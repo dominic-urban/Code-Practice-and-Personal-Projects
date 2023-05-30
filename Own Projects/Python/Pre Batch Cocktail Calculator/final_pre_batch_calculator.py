@@ -2,12 +2,14 @@
 ###Goal of this little script is to give me a calculator where I can enter a cocktail, work out the total cost, and the mls of whatever single missing ingredient when something is eg. top with soda
 
 ##Glassware types by mileage, note, rough mileage required after ice:
-glassware = {"Old Fash": 125, "Jug": 2000}
+glassware = {"Old Fash": 125, "Jug": 2000, "Nutribullet": 1000}
 
 ##Cocktail ingredients + mls dictionaries
 #Note, always put mixer(top with) ingredient last for mls calculator to work
 kentucky_buck = {"Scotch": 45, "Lemon Juice": 22.5, "Bitters": 2, "Strawberry Syrup": 10, "Ginger Beer": 45}
 paloma = {"Tequila": 45, "Ruby Red Grapefruit Juice": 25, "Lime Juice": 10, "Pink Grapefruit Syrup": 15, "Soda Water": 30}
+dead_reckoning = {"Pineapple Rum": 45, "Galway Pipe": 15, "Lemon Juice": 30, "Pineapple Juice": 30, "Vanilla Syrup": 15, "Maple Syrup": 15, "Bitters": 2, "Soda Water": 30}
+pavlovs_dom = {"Vodka": 30, "Medium Strawberry": 1, "Blueberry": 4, "Sugar Syrup": 22.5, "Vanilla Essence": 5, "Lemon Juice": 30, "Canned Passionfruit": 30, "Egg White": 30}
 
 #Ingredient and price per ml dictionary
 #This will need to be manually updated each time prebatch is being made (i think)
@@ -36,12 +38,12 @@ def carbonated_mixer_percent(cocktail_dictionary):
 ##Calculator for mls of each cocktail ingredient in pre-batch
 #Two versions, one where all ingredients are going into pre-batch, one without last ingredient (eg. carbonated mixer)
 carbonated_mixer = True
-def pre_batch_calculator(cocktail_dictionary, carbonated_mixer, glassware, quantity=1):
+def pre_batch_calculator(cocktail_dictionary, carbonated_mixer=0, glassware=2000, quantity=1, cost=False):
   final_cocktail_dictionary = {}
   ingredient = list(cocktail_dictionary.keys())
   mls_of_ingredient = list(cocktail_dictionary.values())
   mls_per_ingredients_per_batch = {item: mls for item, mls in zip(ingredient, mls_of_ingredient)} 
-  if carbonated_mixer == True: 
+  if carbonated_mixer == 1: 
     del ingredient[-1]
     del mls_of_ingredient[-1]    
   final_cocktail_dictionary = dict(zip(ingredient, mls_of_ingredient))
@@ -55,17 +57,18 @@ def pre_batch_calculator(cocktail_dictionary, carbonated_mixer, glassware, quant
     print("Batch all ingredients except " + list(mls_per_ingredients_per_batch)[-1])  
   print("Each cocktail should use " + str(round(mls_calculator(final_cocktail_dictionary))) + "mls of the pre batch")  
   carbonated_mixer_percent(cocktail_dictionary)
-  total_cost_per = 0
-  for key in cocktail_dictionary:
-    key = (ingredient_pp_ml[key] * cocktail_dictionary[key])
-    total_cost_per += key
-  print("Cost per cocktail $" + str(total_cost_per))
-  total_cost = total_cost_per * cocktails_per_pre_batch 
-  print("Total cost per batched jug : $" + str(total_cost))   
+  if cost == True:
+    total_cost_per = 0
+    for key in cocktail_dictionary:
+      key = (ingredient_pp_ml[key] * cocktail_dictionary[key])
+      total_cost_per += key
+    print("Cost per cocktail $" + str(total_cost_per))
+    total_cost = total_cost_per * cocktails_per_pre_batch 
+    print("Total cost per batched jug : $" + str(total_cost))   
 
 #Final Prints/Program Execution
-print('{:s}'.format('\u0332'.join("\nPaloma:")))
-pre_batch_calculator(paloma, carbonated_mixer, glassware["Jug"])
-print('{:s}'.format('\u0332'.join("\nKentucky Buck:")))
-pre_batch_calculator(kentucky_buck, carbonated_mixer, glassware["Jug"])
+print('{:s}'.format('\u0332'.join("\nDead Reckoning:")))
+pre_batch_calculator(dead_reckoning, 1, glassware["Nutribullet"], 1)
+print('{:s}'.format('\u0332'.join("\nPavlov's Dom:")))
+pre_batch_calculator(pavlovs_dom, 0, glassware["Nutribullet"], 1, False)
 
